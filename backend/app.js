@@ -1,8 +1,16 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-
+const mongoose = require('mongoose');
 const Post = require('./models/post');
 const app = express();
+
+mongoose.connect("mongodb+srv://jose:xPsJz8t3Fq9eXiiw@cluster0-5lr2l.mongodb.net/test?retryWrites=true")
+  .then(() => {
+    console.log('Connected to database');
+  })
+  .catch(() => {
+    console.log('Connection failed')
+  })
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
@@ -18,6 +26,8 @@ app.use((req, res, next) => {
     );
   next();
 });
+
+// xPsJz8t3Fq9eXiiw
 
 app.post('/api/posts' , (req, res, next) => {
   const post = new Post({
