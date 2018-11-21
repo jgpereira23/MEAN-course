@@ -56,6 +56,12 @@ export class PostsService {
       });
   }
 
+  updatePost(postId: string, title: string, content: string) {
+    const post: Post = {id: postId, title: title, content: content};
+    this.http.put('http://localhost:3000/api/posts/' + postId, post)
+      .subscribe(response => console.log(response));
+  }
+
   getPost(postId: string) {
       return {...this.posts.find(p => p.id === postId)};
   }
