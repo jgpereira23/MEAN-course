@@ -23,10 +23,12 @@ export class PostCreateComponent implements OnInit {
 
   ngOnInit() {
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
-      if (paramMap.has('postId')) {
+      if (paramMap.has('id')) {
         this.mode = 'edit';
-        this.postId = paramMap.get('postId');
-        this.post = this.postsService.getPost(this.postId);
+        this.postId = paramMap.get('id');
+        this.postsService.getPost(this.postId).subscribe(postData => {
+          this.post = {id: postData._id, title : postData.title, content: postData.content};
+        });
       } else {
         this.mode = 'create';
         this.postId = null;
@@ -39,9 +41,9 @@ export class PostCreateComponent implements OnInit {
     }
     if (this.mode === 'create') {
       this.postsService.addPost(form.value.title, form.value.content);
-      form.resetForm();
     } else {
-      this.postsService.updatePost(this.postId, form.value.title, form.value.content)
+      this.postsService.updatePost(this.postId, form.value.title, form.value.content);
     }
+    form.resetForm();
   }
 }
