@@ -49,7 +49,7 @@ export class AuthService {
       password: password
     };
     this.http
-      .post<{ token: string; expiresIn: number, userId: string }>(
+      .post<{ token: string, expiresIn: number, userId: string }>(
         'http://localhost:3000/api/user/login',
         authData
       )
